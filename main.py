@@ -160,7 +160,7 @@ def main():
                 model_volcan = load_model("volcan.pkl")  
                 col1,col2 = st.columns(2)
                 with col1:
-                    seismic_activity = st.number_input("Activité sysmique",step=0.1,key='seismic_activity')
+                    seismic_activity = st.number_input("Activité sismique",step=0.1,key='seismic_activity')
                     gas_emission = st.number_input("Emission de Gaz",step=0.1,key='gas_emission')
                     ground_deformation = st.number_input("Deformation du Sol",step=0.1,key='ground_deformation')
                     crater_temperature = st.number_input("Temperature du Cratère",step=0.1,key='crater_temperature')
