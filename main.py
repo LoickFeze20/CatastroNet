@@ -17,9 +17,9 @@ from dotenv import load_dotenv
 from groq import Groq
 load_dotenv()
 
-def load_model(filename):
-    with open(os.path.join("models", filename), "rb") as file:
-        model = pickle.load(file)
+def load_model(pkl_path):
+    with open(pkl_path, 'rb') as f:
+        model = pickle.load(f)
     return model
 
 st.set_page_config(page_title="CATASTRONET", layout="wide",page_icon="🌋")
