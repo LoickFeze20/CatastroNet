@@ -1,0 +1,255 @@
+/* ======== GLOBAL - Clair (par défaut) ======== */
+html, body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+h1, h2, h3 {
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 2.2em;
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: 1.6em;
+}
+
+/* ======== SIDEBAR ======== */
+section[data-testid="stSidebar"] {
+    background-color: #1f2d3d;
+    color: #ecf0f1;
+    padding: 20px;
+}
+
+.sidebar-img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+.sidebar-img:hover {
+    transform: scale(1.05);
+}
+
+section[data-testid="stSidebar"] .css-1v0mbdj,
+section[data-testid="stSidebar"] .css-qri22k {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ecf0f1;
+    margin-bottom: 20px;
+}
+
+/* ======== METRICS, TABLES, PLOTS ======== */
+[data-testid="metric-container"],
+.stPlotlyChart, .stPyplot,
+.stDataFrame {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    padding: 10px;
+    margin: 10px 0;
+}
+
+/* ======== BUTTONS ======== */
+button[kind="primary"] {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+button[kind="primary"]:hover {
+    background-color: #34495e;
+}
+
+/* ======== Chatbot & Form ======== */
+.chatbot-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 35px;
+    box-shadow: 0 0px 0px rgba(0,0,0,0.2);
+}
+
+.chat-input {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto 10px auto;
+    padding: 10px 15px;
+    border: 2px solid #4A90E2;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    display: block;
+}
+
+.send-button {
+    display: block;
+    margin: 0 auto 30px auto;
+    padding: 10px 30px;
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.send-button:hover {
+    background-color: #357ABD;
+}
+
+.chat-response {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #f0f4f8;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-size: 1rem;
+    color: #333;
+    white-space: pre-wrap;
+}
+
+/* ======== Formulaire personnalisé ======== */
+div.stForm {
+    background: #dfdede;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(198,35,10,0.15);
+    margin-bottom: 30px;
+}
+
+div.stForm > div > div:nth-child(1) > div {
+    font-size: 24px;
+    font-weight: 700;
+    color: #b33a3a;
+    border: 2px solid #b33a3a;
+    padding: 8px 15px;
+    border-radius: 10px;
+    width: fit-content;
+    margin-bottom: 20px;
+}
+
+input[type="number"] {
+    border-radius: 10px !important;
+    border: 1.5px solid #b33a3a !important;
+    padding: 10px !important;
+    box-shadow: 0 4px 8px rgba(179, 58, 58, 0.2);
+    font-size: 16px !important;
+}
+
+.stButton > button {
+    background-color: #3ab374;
+    color: white;
+    border-radius: 12px;
+    padding: 10px 25px;
+    font-weight: 700;
+    border: none;
+    box-shadow: 0 5px 15px rgba(220, 152, 152, 0.6);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 20px;
+}
+.stButton > button:hover {
+    background-color: #ab6c6c;
+    box-shadow: 0 8px 20px rgba(138, 42, 42, 0.8);
+    cursor: pointer;
+}
+
+/* ======== Adaptation Thème Sombre ======== */
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background-color: #1c1c1c;
+        color: #e0e0e0;
+    }
+
+    h1, h2, h3 {
+        color: #ffffff;
+    }
+
+    section[data-testid="stSidebar"] {
+        background-color: #141b23;
+        color: #f0f0f0;
+    }
+
+    [data-testid="metric-container"],
+    .stPlotlyChart, .stPyplot,
+    .stDataFrame,
+    .chat-response,
+    div.stForm {
+        background-color: #2c2c2c;
+        color: #e0e0e0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .stButton > button {
+        background-color: #208f63;
+        color: #fff;
+    }
+
+    .stButton > button:hover {
+        background-color: #1b6d4c;
+    }
+
+    input[type="number"] {
+        background-color: #333;
+        color: #f0f0f0;
+        border: 1.5px solid #4caf50;
+    }
+
+    .chat-input {
+        background-color: #333;
+        color: #f0f0f0;
+        border: 2px solid #4caf50;
+    }
+
+    .send-button {
+        background-color: #4caf50;
+    }
+
+    .send-button:hover {
+        background-color: #3e8e41;
+    }
+}
+.fleche {
+  font-size: 150px;      /* taille énorme */
+  text-align: center;    /* centrer le texte dans son conteneur */
+  width: 100%;           /* prend toute la largeur */
+  margin: 0 auto;        /* centrage horizontal */
+  color: #333;           /* couleur personnalisée */
+}
+
+.tit{
+    text-align: right;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 6px 12px;
+        border: 2px solid #4CAF50;
+        border-radius: 8px;
+        color: #4CAF50;
+        width: fit-content;
+        margin-left: auto;
+}
+.tite{
+    text-align: justify;
+        font-size: 34px;
+        font-weight: bold;
+        padding: 6px 12px;
+        /*border: 2px solid #4CAF50;*/
+        border-radius: 8px;
+        color: #c12e2e;
+        width: fit-content;
+        /*margin-left: auto;*/
+}
