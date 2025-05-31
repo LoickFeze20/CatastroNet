@@ -48,13 +48,14 @@ def main():
     )
     st.sidebar.markdown("<div style='text-align:center;'>CatastroNet🌫</div>",unsafe_allow_html=True)
     
-    menu = ["Home🏠","Dashboard📈","Prediction💹","Assistance🤖"]
+    menu = ["Home🏠","Dashboard📈","Prediction💹","MultiPredict💹💹","Assistance🤖"]
     choice = st.sidebar.selectbox("Board",menu)
     
     if choice =='Home🏠':
 
         st.title("🌍 CatastroNet - Système intelligent de gestion des catastrophes naturelles")
-
+        
+            
         st.markdown("""
         Bienvenue sur *CatastroNet*, votre plateforme intelligente dédiée à l’analyse, la prévention et la gestion des catastrophes naturelles.
 
@@ -68,6 +69,47 @@ def main():
         💡 Sélectionnez une option dans le menu latéral pour commencer l’analyse ou explorer les données.
 
         """)
+        
+        col1,col2,col3 = st.columns(3)
+        with col1:
+            with open("volcan.jpg", "rb") as file:
+                img_da = file.read()
+            img_base = base64.b64encode(img_da).decode()
+
+            st.markdown(
+                f"""
+                <img class="col-img" src="data:image/jpeg;base64,{img_base}">
+                """,
+                unsafe_allow_html=True
+            )
+            st.markdown("<div style='text-align:center;'>Volcano🌋</div>",unsafe_allow_html=True)
+            
+        with col2:
+            with open("torna.jpg", "rb") as file:
+                img_dat = file.read()
+            img_base6 = base64.b64encode(img_dat).decode()
+
+            st.markdown(
+                f"""
+                <img class="col-img" src="data:image/jpeg;base64,{img_base6}">
+                """,
+                unsafe_allow_html=True
+            )
+            st.markdown("<div style='text-align:center;'>Tornade🌪</div>",unsafe_allow_html=True)
+            
+        with col3:
+            with open("oura.jpg", "rb") as file:
+                img_datas = file.read()
+            img_base64s = base64.b64encode(img_datas).decode()
+
+            st.markdown(
+                f"""
+                <img class="col-img" src="data:image/jpeg;base64,{img_base64s}">
+                """,
+                unsafe_allow_html=True
+            )
+            st.markdown("<div style='text-align:center;'>ouragan🌀</div>",unsafe_allow_html=True)
+            
             
     elif choice == 'Dashboard📈':
         @st.cache_data
@@ -155,7 +197,8 @@ def main():
             st.markdown("Choisir Le Type de Prediction Que Vous Souhaitez Faire et Remplir Les Données")
             
             
-            with st.form(key='Details'):  
+            with st.form(key='Details'): 
+                 
                 st.markdown("<div class='tite'>🌋Eruption Volcanique</div>",unsafe_allow_html=True)
                 model_volcan = load_model("volcan.pkl")  
                 col1,col2 = st.columns(2)
@@ -198,7 +241,8 @@ def main():
                     else:
                         st.success(
                             "✅ Pas de Risque d'Éruption Volcanique"
-                        )
+                        )        
+            
             
             with st.form(key='Detail'):    
                 st.markdown("<div class='tite'>🌪Séisme</div>",unsafe_allow_html=True)
@@ -517,8 +561,206 @@ def main():
                         st.error("⚠️ Risque d'une Canicule")
                     else:
                         st.success("✅ Pas de Risque d'une Canicule")
-                    
-                    
+    
+    elif choice == 'MultiPredict💹💹':
+        @st.cache_data
+        def load_data(dataset):
+            data = pd.read_csv(dataset)
+            return data
+        
+        def filedownload(data):
+            csv = data.to_csv(index=False)
+            b64 = base64.b64encode(csv.encode()).decode()  # strings <-> bytes conversions
+            href = f'<a href="data:file/csv;base64,{b64}" download="predictions.csv">Download CSV File</a>'
+            return href
+        
+        st.subheader('Prediction Multiple💹💹')
+        boot = st.button("Plus d'Informations")
+        if boot:
+            st. markdown("""
+            La prédiction multiple: il s'agit de faire une prediction groupée des données sauvegardé dans un csv 
+            
+            Pour ce faire:
+            - Choisir le type de prediction à faire
+            - Uploaded les données depuis votre Machine (fichier .csv)
+            - Lancer la prediction
+                
+            Vous avez la possiblitité de sauvergarder les données
+            """)  
+        tab1,tab2,tab3 = st.tabs(["🌍Terrestre","🌊Aquatique","🪐Atmosphérique"])
+        with tab1:
+            st.markdown("<div class='tite'>🌋Eruption Volcanique</div>",unsafe_allow_html=True)
+            uploaded_volcan = st.file_uploader('Volcan csv',type=['csv'])  
+            if uploaded_volcan:
+                df = load_data(uploaded_volcan)
+                model_v = pickle.load(open('volcan.pkl','rb'))
+                prediction = model_v.predict(df)
+                st.subheader('Prediction Volcanique')
+                #transforme du aré de stream en dataset et l'introduire dans le dataset fourni
+                pp = pd.DataFrame(prediction,columns=['Prediction'])
+                dfn = pd.concat([df,pp],axis=1)
+                dfn.Prediction.replace(0,"✅ Pas de Risque d'Éruption Volcanique",inplace=True)
+                dfn.Prediction.replace(1,"⚠️ Risque d'Éruption Volcanique",inplace=True)
+                st.write(dfn)
+                button = st.button('Download')
+                if button:
+                    st.markdown(filedownload(dfn),unsafe_allow_html=True)
+            
+            st.markdown("<div class='tite'>🌪Séisme</div>",unsafe_allow_html=True)
+            uploaded_seisme = st.file_uploader('Seisme csv',type=['csv'])
+            if uploaded_seisme:
+                df = load_data(uploaded_seisme)
+                model_s = pickle.load(open('seisme.pkl','rb'))
+                prediction = model_s.predict(df)
+                st.subheader('Prediction Séisme')
+                #transforme du aré de stream en dataset et l'introduire dans le dataset fourni
+                pp = pd.DataFrame(prediction,columns=['Prediction'])
+                dfn = pd.concat([df,pp],axis=1)
+                dfn.Prediction.replace(0,"✅ Pas de Risque de seisme",inplace=True)
+                dfn.Prediction.replace(1,"⚠️ Risque de seisme",inplace=True)
+                st.write(dfn)
+                button = st.button('Download')
+                if button:
+                    st.markdown(filedownload(dfn),unsafe_allow_html=True)
+            
+            st.markdown("<div class='tite'>☀Sècheresse</div>",unsafe_allow_html=True)
+            uploaded_secheresse = st.file_uploader('Secheresse csv',type=['csv'])
+            if uploaded_secheresse:
+                df = load_data(uploaded_secheresse)
+                model_se = pickle.load(open('secheresse.pkl','rb'))
+                prediction = model_se.predict(df)
+                st.subheader('Prediction Sècheresse')
+                #transforme du aré de stream en dataset et l'introduire dans le dataset fourni
+                pp = pd.DataFrame(prediction,columns=['Prediction'])
+                dfn = pd.concat([df,pp],axis=1)
+                dfn.Prediction.replace(0,"✅ Pas de Risque de secheresse",inplace=True)
+                dfn.Prediction.replace(1,"⚠️ Risque de secheresse",inplace=True)
+                st.write(dfn)
+                button = st.button('Download')
+                if button:
+                    st.markdown(filedownload(dfn),unsafe_allow_html=True)
+            
+            st.markdown("<div class='tite'>❄Tempête de Neige</div>",unsafe_allow_html=True)
+            uploaded_neige = st.file_uploader('Tempête de Neige csv',type=['csv'])   
+            if uploaded_neige:
+                df = load_data(uploaded_neige)
+                model_n = pickle.load(open('neige.pkl','rb'))
+                prediction = model_n.predict(df)
+                st.subheader('Prediction Tempête de Neige')
+                #transforme du aré de stream en dataset et l'introduire dans le dataset fourni
+                pp = pd.DataFrame(prediction,columns=['Prediction'])
+                dfn = pd.concat([df,pp],axis=1)
+                dfn.Prediction.replace(0,"✅ Pas de Risque de Tempête de Neige",inplace=True)
+                dfn.Prediction.replace(1,"⚠️ Risque de Tempête de Neige",inplace=True)
+                st.write(dfn)
+                button = st.button('Download')
+                if button:
+                    st.markdown(filedownload(dfn),unsafe_allow_html=True)    
+            
+        with tab2:
+            st.markdown("<div class='tite'>☔Inondation</div>",unsafe_allow_html=True)
+            uploaded_inondation = st.file_uploader('Inondation csv',type=['csv'])    
+            if uploaded_inondation:
+                df = load_data(uploaded_inondation)
+                model_i = pickle.load(open('inondation.pkl','rb'))
+                prediction = model_i.predict(df)
+                st.subheader('Prediction Inondation')
+                #transforme du aré de stream en dataset et l'introduire dans le dataset fourni
+                pp = pd.DataFrame(prediction,columns=['Prediction'])
+                dfn = pd.concat([df,pp],axis=1)
+                dfn.Prediction.replace(0,"✅ Pas de Risque d'inondation",inplace=True)
+                dfn.Prediction.replace(1,"⚠️ Risque d'inondation",inplace=True)
+                st.write(dfn)
+                button = st.button('Download')
+                if button:
+                    st.markdown(filedownload(dfn),unsafe_allow_html=True)
+            
+            st.markdown("<div class='tite'>🌀Ouragan</div>",unsafe_allow_html=True)
+            uploaded_ouragan = st.file_uploader('Ouragan csv',type=['csv'])
+            if uploaded_ouragan:
+                df = load_data(uploaded_ouragan)
+                model_ou = pickle.load(open('ouragan.pkl','rb'))
+                prediction = model_ou.predict(df)
+                st.subheader('Prediction Ouragan')
+                #transforme du aré de stream en dataset et l'introduire dans le dataset fourni
+                pp = pd.DataFrame(prediction,columns=['Prediction'])
+                dfn = pd.concat([df,pp],axis=1)
+                dfn.Prediction.replace(0,"✅ Pas de Risque d'Ouragan",inplace=True)
+                dfn.Prediction.replace(1,"⚠️ Risque d'Ouragan",inplace=True)
+                st.write(dfn)
+                button = st.button('Download')
+                if button:
+                    st.markdown(filedownload(dfn),unsafe_allow_html=True)
+            
+            st.markdown("<div class='tite'>🌊Tsunami</div>",unsafe_allow_html=True)
+            uploaded_tsunami = st.file_uploader('Tsunami csv',type=['csv']) 
+            if uploaded_tsunami:
+                df = load_data(uploaded_tsunami)
+                model_t = pickle.load(open('tsunami.pkl','rb'))
+                prediction = model_t.predict(df)
+                st.subheader('Prediction Tsunami')
+                #transforme du aré de stream en dataset et l'introduire dans le dataset fourni
+                pp = pd.DataFrame(prediction,columns=['Prediction'])
+                dfn = pd.concat([df,pp],axis=1)
+                dfn.Prediction.replace(0,"✅ Pas de Risque de Tsunami",inplace=True)
+                dfn.Prediction.replace(1,"⚠️ Risque de Tsunami",inplace=True)
+                st.write(dfn)
+                button = st.button('Download')
+                if button:
+                    st.markdown(filedownload(dfn),unsafe_allow_html=True)  
+            
+        with tab3:
+            st.markdown("<div class='tite'>⛈Orage</div>",unsafe_allow_html=True)
+            uploaded_orage = st.file_uploader('Orage csv',type=['csv'])   
+            if uploaded_orage:
+                df = load_data(uploaded_orage)
+                model_o = pickle.load(open('orage.pkl','rb'))
+                prediction = model_o.predict(df)
+                st.subheader('Prediction Orage')
+                #transforme du aré de stream en dataset et l'introduire dans le dataset fourni
+                pp = pd.DataFrame(prediction,columns=['Prediction'])
+                dfn = pd.concat([df,pp],axis=1)
+                dfn.Prediction.replace(0,"✅ Pas de Risque d'Orage",inplace=True)
+                dfn.Prediction.replace(1,"⚠️ Risque d'Orage",inplace=True)
+                st.write(dfn)
+                button = st.button('Download')
+                if button:
+                    st.markdown(filedownload(dfn),unsafe_allow_html=True) 
+            
+            st.markdown("<div class='tite'>🥶Vague de Froid</div>",unsafe_allow_html=True)
+            uploaded_froid = st.file_uploader('Vague de Froid csv',type=['csv'])
+            if uploaded_froid:
+                df = load_data(uploaded_froid)
+                model_f = pickle.load(open('froid.pkl','rb'))
+                prediction = model_f.predict(df)
+                st.subheader('Prediction Vague de Froid')
+                #transforme du aré de stream en dataset et l'introduire dans le dataset fourni
+                pp = pd.DataFrame(prediction,columns=['Prediction'])
+                dfn = pd.concat([df,pp],axis=1)
+                dfn.Prediction.replace(0,"✅ Pas de Risque de Vague de Froid",inplace=True)
+                dfn.Prediction.replace(1,"⚠️ Risque de Vague de Froid",inplace=True)
+                st.write(dfn)
+                button = st.button('Download')
+                if button:
+                    st.markdown(filedownload(dfn),unsafe_allow_html=True)
+            
+            st.markdown("<div class='tite'>🥵Canicule</div>",unsafe_allow_html=True)
+            uploaded_canicule = st.file_uploader('Canicule csv',type=['csv'])
+            if uploaded_canicule:
+                df = load_data(uploaded_canicule)
+                model_c = pickle.load(open('canicule.pkl','rb'))
+                prediction = model_c.predict(df)
+                st.subheader('Prediction Canicule')
+                #transforme du aré de stream en dataset et l'introduire dans le dataset fourni
+                pp = pd.DataFrame(prediction,columns=['Prediction'])
+                dfn = pd.concat([df,pp],axis=1)
+                dfn.Prediction.replace(0,"✅ Pas de Risque de Canicule",inplace=True)
+                dfn.Prediction.replace(1,"⚠️ Risque de Canicule",inplace=True)
+                st.write(dfn)
+                button = st.button('Download')
+                if button:
+                    st.markdown(filedownload(dfn),unsafe_allow_html=True)
+                
     elif choice == 'Assistance🤖':
 
         def img_to_base64(img_path):
@@ -534,7 +776,7 @@ def main():
         # Zone de texte et bouton côte à côte
         message = st.text_input('En quoi puis-je vous aider 💬', key='chat_input')
         
-        send = st.button("Envoyer", key='send_btn', help="Cliquez pour envoyer votre message")
+        send = st.button("Rechercher", key='send_btn', help="Cliquez pour Rechercher")
 
         client = Groq(api_key=os.environ.get("GROQ_API_KEYS"))
         print("Clé chargée :", os.environ.get("GROQ_API_KEYS"))
