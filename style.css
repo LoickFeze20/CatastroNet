@@ -25,7 +25,7 @@ section[data-testid="stSidebar"] {
     color: #ecf0f1;
     padding: 20px;
 }
-
+/* image */
 .sidebar-img {
     border-radius: 50%;
     width: 100px;
@@ -38,6 +38,20 @@ section[data-testid="stSidebar"] {
     transition: transform 0.3s ease;
 }
 .sidebar-img:hover {
+    transform: scale(1.05);
+}
+
+.col-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+.col-img:hover {
     transform: scale(1.05);
 }
 
@@ -132,7 +146,7 @@ div.stForm {
     margin-bottom: 30px;
 }
 
-/*div.stForm > div > div:nth-child(1) > div {
+div.stForm > div > div:nth-child(1) > div {
     font-size: 24px;
     font-weight: 700;
     color: #b33a3a;
@@ -141,7 +155,7 @@ div.stForm {
     border-radius: 10px;
     width: fit-content;
     margin-bottom: 20px;
-}*/
+}
 
 input[type="number"] {
     border-radius: 10px !important;
