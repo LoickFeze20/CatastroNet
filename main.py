@@ -225,15 +225,6 @@ def main():
                     
                     st.success('Prédiction terminée 🎉')
                     
-                    st.markdown(
-                        f"""
-                        <div style="font-size:18px; margin-top:20px; margin-bottom:20px;">
-                            La prédiction est : <strong>{prediction}</strong>
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
-                    
                     if prediction == 1:
                         st.error(
                             "⚠️ Risque d'Éruption Volcanique"
@@ -269,8 +260,7 @@ def main():
                     with st.spinner('calcul en cours..'):
                         prediction = model_seisme.predict(seisme)[0]
                         time.sleep(1)
-                    st.success('Prediction terminée')
-                    st.markdown(f"La Prediction est égal à:**{prediction}**")
+                    st.success('Prédiction terminée 🎉')
                     if prediction == 1:
                         st.error("⚠️ Risque de Séisme")
                     else:
@@ -302,7 +292,6 @@ def main():
                         prediction = model_secheresse.predict(secheresse)[0]
                         time.sleep(1)
                     st.success('Prediction terminée')
-                    st.markdown(f"La Prediction est égal à:**{prediction}**")
                     if prediction == 1:
                         st.error("⚠️ Risque de Sècheresse")
                     else:
@@ -334,7 +323,6 @@ def main():
                         prediction = model_neige.predict(neige)[0]
                         time.sleep(1)
                     st.success('Prediction terminée')
-                    st.markdown(f"La Prediction est égal à:**{prediction}**")
                     if prediction == 1:
                         st.error("⚠️ Risque d'une Tempête de Neige")
                     else:
@@ -371,7 +359,6 @@ def main():
                         prediction = model_inondation.predict(inondation)[0]
                         time.sleep(1)
                     st.success('Prediction terminée')
-                    st.markdown(f"La Prediction est égal à:**{prediction}**")
                     if prediction == 1:
                         st.error("⚠️ Risque d'Inondation")
                     else:
@@ -406,7 +393,6 @@ def main():
                         prediction = model_ouragan.predict(ouragan)[0]
                         time.sleep(1)
                     st.success('Prediction terminée')
-                    st.markdown(f"La Prediction est égal à:**{prediction}**")
                     if prediction == 1:
                         st.error("⚠️ Risque d'Ouragan")
                     else:
@@ -443,7 +429,6 @@ def main():
                         prediction = model_tsunami.predict(tsunami)[0]
                         time.sleep(1)
                     st.success('Prediction terminée')
-                    st.markdown(f"La Prediction est égal à:**{prediction}**")
                     if prediction == 1:
                         st.error("⚠️ Risque de Tsunami")
                     else:
@@ -482,7 +467,6 @@ def main():
                         prediction = model_orage.predict(orage)[0]
                         time.sleep(1)
                     st.success('Prediction terminée')
-                    st.markdown(f"La Prediction est égal à:**{prediction}**")
                     if prediction == 1:
                         st.error("⚠️ Risque d'un Orage")
                     else:
@@ -520,7 +504,6 @@ def main():
                         prediction = model_froid.predict(froid)[0]
                         time.sleep(1)
                     st.success('Prediction terminée')
-                    st.markdown(f"La Prediction est égal à:**{prediction}**")
                     if prediction == 1:
                         st.error("⚠️ Risque d'une Vague de Froid")
                     else:
@@ -556,7 +539,6 @@ def main():
                         prediction = model_canicule.predict(canicule)[0]
                         time.sleep(1)
                     st.success('Prediction terminée')
-                    st.markdown(f"La Prediction est égal à:**{prediction}**")
                     if prediction == 1:
                         st.error("⚠️ Risque d'une Canicule")
                     else:
